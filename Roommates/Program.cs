@@ -32,17 +32,12 @@ namespace Roommates
             Console.WriteLine("Getting All Roommates:");
             Console.WriteLine();
 
-            List<Roommate> allRoommates = roommateRepo.GetAll();
+            List<Roommate> allRoommates = roommateRepo.GetAllWithRoom();
 
             foreach (Roommate roommate in allRoommates)
             {
-                Console.WriteLine($"{roommate.Id} {roommate.Firstname} {roommate.Lastname} {roommate.RentPortion} {roommate.MovedInDate}");
+                Console.WriteLine($"{roommate.Id} {roommate.Firstname} {roommate.Lastname} {roommate.RentPortion} {roommate.MovedInDate} {roommate.Room.Name}");
             }
-
-            Console.WriteLine("Get roommate by Id: ");
-            Roommate aRoommate = roommateRepo.GetById(2);
-            Console.WriteLine($"{aRoommate.Id} {aRoommate.Firstname} {aRoommate.Lastname} {aRoommate.RentPortion} {aRoommate.MovedInDate}");
-
 
         }
     }
