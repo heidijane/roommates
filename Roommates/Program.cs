@@ -26,6 +26,7 @@ namespace Roommates
                 int selection = Menu();
                 switch (selection)
                 {
+                    //LIST ALL THE ROOMS//
                     case 1:
                         List<Room> allRooms = roomRepo.GetAll();
                         Console.WriteLine("All Rooms:");
@@ -34,6 +35,7 @@ namespace Roommates
                             Console.WriteLine(room);
                         }
                         break;
+                    //ADD A NEW ROOM//
                     case 2:
                         Console.WriteLine("Add a Room");
                         Console.WriteLine("-----------------------------");
@@ -74,6 +76,7 @@ namespace Roommates
                         }
 
                         break;
+                    //EDIT ROOM//
                     case 3:
                         Console.WriteLine("Edit a Room");
                         Console.WriteLine("-----------------------------");
@@ -146,6 +149,74 @@ namespace Roommates
                         Console.WriteLine("Room Updated!");
 
                         break;
+                    //DELETE ROOM//
+                    case 4:
+                        Console.WriteLine("Delete a Room");
+                        Console.WriteLine("-----------------------------");
+                        List<Room> deleteRooms = roomRepo.GetAll();
+                        Room deleteRoom = null;
+                        foreach (Room room in deleteRooms)
+                        {
+                            Console.WriteLine(room);
+                        }
+
+                        int deleteRoomId;
+                        Console.WriteLine();
+                        Console.WriteLine("ID of the room you want to delete: ");
+                        string deleteChoice = Console.ReadLine();
+                        while (deleteRoom == null)
+                        {
+                            try
+                            {
+                                deleteRoomId = int.Parse(deleteChoice);
+                            }
+                            catch
+                            {
+                                Console.WriteLine("Invalid Selection. Please try again.");
+                                Console.WriteLine();
+                                Console.WriteLine("ID of the room you want to delete: ");
+                                deleteChoice = Console.ReadLine();
+                            }
+                            deleteRoomId = int.Parse(deleteChoice);
+                            try
+                            {
+                                deleteRoom = deleteRooms.First(room => room.Id == deleteRoomId);
+                            }
+                            catch
+                            {
+                                Console.WriteLine("No matching ID found, please try again.");
+                                Console.WriteLine();
+                                Console.WriteLine("ID of the room you want to delete: ");
+                                deleteChoice = Console.ReadLine();
+                            }
+
+                        }
+
+                        //room is valid, confirm deletion
+                        Console.Write($"Are you sure that you want to delete the {deleteRoom.Name} (y/n)? ");
+                        string confirm = Console.ReadLine();
+                        if (confirm == "y")
+                        {
+                            //go ahead and delete the room
+                            roomRepo.Delete(deleteRoom.Id);
+                            Console.WriteLine("Room was deleted!");
+                            break;
+                        } 
+                        else
+                        {
+                            Console.WriteLine("Cancelling...");
+                        }
+
+                        break;
+                    //LIST ALL ROOMMATES//
+                    case 5:
+                        List<Roommate> allRoommates = roommateRepo.GetAllWithRoom();
+                        Console.WriteLine("All Roommmates:");
+                        foreach (Roommate roommate in allRoommates)
+                        {
+                            Console.WriteLine(roommate);
+                        }
+                        break;
                     case 0:
                         Console.WriteLine("Thank you for using Roommate Manager!");
                         return;
@@ -160,7 +231,7 @@ namespace Roommates
         {
             int selection = -1;
 
-            while (selection < 0 || selection > 4)
+            while (selection < 0 || selection > 8)
             {
                 Console.WriteLine("-----------------------------");
                 Console.WriteLine();
@@ -170,6 +241,12 @@ namespace Roommates
                 Console.WriteLine(" 2) Add a Room");
                 Console.WriteLine(" 3) Edit a Room");
                 Console.WriteLine(" 4) Delete a Room");
+                Console.WriteLine("-----------------------------");
+                Console.WriteLine(" 5) List All Roommmates");
+                Console.WriteLine(" 6) Add a Roommate");
+                Console.WriteLine(" 7) Edit a Roommate");
+                Console.WriteLine(" 8) Delete a Roommate");
+                Console.WriteLine("-----------------------------");
                 Console.WriteLine(" 0) Exit");
 
                 Console.Write("> ");

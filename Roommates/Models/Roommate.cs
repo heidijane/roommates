@@ -11,5 +11,15 @@ namespace Roommates.Models
         public int RentPortion { get; set; }
         public DateTime MovedInDate { get; set; }
         public Room Room { get; set; }
+        public override string ToString()
+        {
+            return $@"
+---------------------------------
+{Id}) {Firstname} {Lastname}
+Rent Portion: {RentPortion}
+Moved In: {MovedInDate}
+Lives in the {Room.Name}
+";
+        }
     }
 }
