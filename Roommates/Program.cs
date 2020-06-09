@@ -211,6 +211,7 @@ namespace Roommates
                                 Console.WriteLine("ID of the room you want to delete: ");
                                 deleteChoice = Console.ReadLine();
                             }
+
                             deleteRoom = RoomUtils.findRoom(int.Parse(deleteChoice), deleteRooms);
 
                         }
